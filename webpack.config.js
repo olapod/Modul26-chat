@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
+
 const plugins = [new HtmlWebpackPlugin({
     template: 'client/index.html',
     filename: 'index.html',
