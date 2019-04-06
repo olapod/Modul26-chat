@@ -1,0 +1,31 @@
+.Users {
+flex: 1;
+border: 3px solid rgb(255, 0, 191);
+}
+
+.UsersOnline {
+    background-color: cadetblue;
+    text-align: center;
+} 
+
+.UsersList {
+    
+    border: 3px solid rgb(55, 0, 255);
+    list-style: none;
+    margin: 0 auto;
+}
+
+.UserItem {
+    list-style-type: none;
+    position: relative;
+    font-size: 20px;
+}
+
+.UserItem:before {
+    content: '\2022';      
+    position: absolute;
+    left: -30px;
+    bottom: -28px;       
+    font-size: 60px; 
+    color: green;
+}

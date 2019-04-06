@@ -1,6 +1,5 @@
 .UserForm {
     margin-top:50vh;
-    
 }
 
 .UserInput {
@@ -21,4 +20,7 @@
     font-style: italic;
     font-weight: normal;
     
+}
+.UserInput:focus {
+    outline: none;
 }

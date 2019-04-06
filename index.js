@@ -34,10 +34,8 @@ io.on('connection', (socket) => {
       users: usersService.getAllUsers()
         });
     });
-  });
-
+  
 //Aplikacja nasłuchująca na zdarzenie disconnect
-io.on('connection', (socket) => {
     socket.on('disconnect', () => {
       usersService.removeUser(socket.id);
       socket.broadcast.emit('update', {
