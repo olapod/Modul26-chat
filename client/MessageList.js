@@ -1,8 +1,10 @@
 import React from 'react';
 import styles from './MessageList.css';
 
+
 const Message = props => (
-  <div className={styles.Message}>
+  
+  <div className={styles.Message} style={{backgroundColor: props.color}}>
     <strong>{props.from} :</strong>
     <span>{props.text}</span>
   </div>
@@ -17,6 +19,7 @@ const MessageList = props => (
             key={i}
             from={message.from}
             text={message.text}
+            color={this.props.getColor.bind(this, i)}
           />
         );
       })

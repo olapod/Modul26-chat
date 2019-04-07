@@ -14,9 +14,17 @@ const socket = io('/');
 class App extends Component {
     constructor(props) {
       super(props);
-      this.state = {users: [], messages: [], text: '', name: ''};
+      this.state = {users: [], 
+                    messages: [], 
+                    text: '', 
+                    name: '', 
+                    colors: [], 
+                                       
+                 };
+     
     };
 
+    
     componentDidMount() {
         socket.on('message', message => this.messageReceive(message));
         socket.on('update', ({users}) => this.chatUpdate(users));
@@ -41,6 +49,20 @@ class App extends Component {
         this.setState({name});
         socket.emit('join', name);
       }
+    
+     generateColor () {
+        return '#' +  Math.random().toString(16).substr(-6);
+      }
+       
+    setUserColor (index) {
+     
+      for (let i = 0; i < this.state.users.length; i +=1) {
+        this.state.colors.push({hexCode: this.generateColor()});
+      };
+      const color = colors[index].hexCode;
+      return  color;
+        
+    }
 
     render() {
         return this.state.name !== '' ? (
@@ -49,6 +71,7 @@ class App extends Component {
       }
     
     renderLayout() {
+            
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
@@ -66,15 +89,18 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
+                  getColor={this.setUserColor.bind(this)}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
                   name={this.state.name}
+                  
                 />
               </div>
             </div>
           </div>
        );
+       
     }
 
     renderUserForm() {
