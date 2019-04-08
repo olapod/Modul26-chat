@@ -18,16 +18,16 @@ class App extends Component {
                     messages: [], 
                     text: '', 
                     name: '', 
-                    colors: [], 
-                                       
+                    colors: [],                   
                  };
-     
+    
     };
 
     
     componentDidMount() {
         socket.on('message', message => this.messageReceive(message));
         socket.on('update', ({users}) => this.chatUpdate(users));
+        
     }
 
     messageReceive(message) {
@@ -37,6 +37,7 @@ class App extends Component {
     
     chatUpdate(users) {
         this.setState({users});
+        this.setUserColor();
     }
 
     handleMessageSubmit(message) {
@@ -50,20 +51,19 @@ class App extends Component {
         socket.emit('join', name);
       }
     
-     generateColor () {
+     generateColor() {
         return '#' +  Math.random().toString(16).substr(-6);
       }
        
-    setUserColor (index) {
-     
+    setUserColor(color) {
       for (let i = 0; i < this.state.users.length; i +=1) {
-        this.state.colors.push({hexCode: this.generateColor()});
+        const color = this.generateColor();
+        return color
       };
-      const color = colors[index].hexCode;
-      return  color;
-        
+      const colors = [color, ...this.state.colors]
+      this.setState({colors});
     }
-
+      
     render() {
         return this.state.name !== '' ? (
           this.renderLayout()
@@ -71,7 +71,7 @@ class App extends Component {
       }
     
     renderLayout() {
-            
+      console.log(this.state.colors)
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
@@ -89,7 +89,7 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
-                  getColor={this.setUserColor.bind(this)}
+                  colors={this.state.colors}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
@@ -100,15 +100,15 @@ class App extends Component {
             </div>
           </div>
        );
-       
+           
     }
 
     renderUserForm() {
         return (<UserForm onUserSubmit={name => this.handleUserSubmit(name)} />)
      }
-
+     
   };
 
  
-
+  
 export default hot(module)(App);

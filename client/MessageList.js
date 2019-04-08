@@ -2,29 +2,46 @@ import React from 'react';
 import styles from './MessageList.css';
 
 
-const Message = props => (
-  
-  <div className={styles.Message} style={{backgroundColor: props.color}}>
-    <strong>{props.from} :</strong>
-    <span>{props.text}</span>
-  </div>
-);
 
-const MessageList = props => (
-  <div className={styles.MessageList}>
-    {
-      props.messages.map((message, i) => {
+class Message extends React.Component {
+  
+  render () {
+    let style = {
+      backgroundColor: this.props.hexCode
+    }
+    return (
+      <div className={styles.Message} style={style}>
+      <strong>{this.props.from} :</strong>
+      <span>{this.props.text}</span>
+    </div>
+    )     
+  };
+}
+
+class MessageList extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render () {
+    return (
+    
+      <div className={styles.MessageList}>
+      {this.props.messages.map((message, i) => {
+        let color = this.props.colors[i]
         return (
           <Message
             key={i}
             from={message.from}
             text={message.text}
-            color={this.props.getColor.bind(this, i)}
+            hexCode={color}
           />
         );
       })
     }
-  </div>
-);
+    </div>
+  )} 
+}
+
 
 export default MessageList;
