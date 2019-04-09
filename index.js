@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
     // użytkownika, który pojawił się w aplikacji, zapisujemy do serwisu trzymającego listę osób w czacie
         usersService.addUser({
       id: socket.id,
+      color: generateColor (),
       name
         });
     // aplikacja emituje zdarzenie update, które aktualizuje informację na temat listy użytkowników każdemu nasłuchującemu na wydarzenie 'update'
@@ -54,6 +55,10 @@ io.on('connection', (socket) => {
       });
     });
   });
+
+  generateColor = () => {
+    return '#' +  Math.random().toString(16).substr(-6);
+  };
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

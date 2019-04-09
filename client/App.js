@@ -49,6 +49,7 @@ class App extends Component {
       }
     
     renderLayout() {
+      console.log("++++++++++++++++" + JSON.stringify(this.state.users))
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
@@ -66,6 +67,7 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
+                  users={this.state.users}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
