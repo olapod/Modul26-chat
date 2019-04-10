@@ -42,17 +42,16 @@ class App extends Component {
         socket.emit('join', name);
       }
     
-    compareTwoArrays() {
-      for (let i=0; i < this.state.users.length; i++) {
-    
-        if (this.state.massages[i].from === users[i].name) {
-          const color = users[i].color
-          console.log("Kolor " + color)
-        } 
-        
+    findColor() {
+      const lastMassage = this.state.massages.shift()
+      const lastName = lastMassage.from
+          
+      for (var i=0; i < this.state.users.length; i++) {
+        if (this.state.users[i].name === lastName) {
+            return this.state.users[i].color;
+        }
       }
-      
-    }  
+    }
 
 
     render() {
@@ -64,7 +63,7 @@ class App extends Component {
     renderLayout() {
       console.log("++++++++++++++++" + JSON.stringify(this.state.users))
       console.log("----------------" + JSON.stringify(this.state.messages))
-      console.log("wwwwwwwwwwwwww" + this.compareTwoArrays())
+      console.log("wwwwwwwwwwwwww" + this.findColor())
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
@@ -82,7 +81,7 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
-                  users={this.state.users}
+                  color={this.findColor()}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
