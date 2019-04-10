@@ -43,8 +43,8 @@ class App extends Component {
       }
     
     findColor() {
-      const lastMassage = this.state.massages.shift()
-      const lastName = lastMassage.from
+      const lastMessage = this.state.messages.slice(0,0)
+      const lastName = lastMessage.from
           
       for (var i=0; i < this.state.users.length; i++) {
         if (this.state.users[i].name === lastName) {
