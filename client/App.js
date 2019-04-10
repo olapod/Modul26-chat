@@ -49,6 +49,8 @@ class App extends Component {
       }
     
     renderLayout() {
+      console.log('+++++++++++++++++' + JSON.stringify(this.state.messages))
+      console.log('-------------------' + JSON.stringify(this.state.users))
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
