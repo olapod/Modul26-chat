@@ -41,6 +41,19 @@ class App extends Component {
         this.setState({name});
         socket.emit('join', name);
       }
+    
+    compareTwoArrays() {
+      for (let i=0; i < this.state.users.length; i++) {
+    
+        if (this.state.massages[i].from === users[i].name) {
+          const color = users[i].color
+          console.log("Kolor " + color)
+        } 
+        
+      }
+      
+    }  
+
 
     render() {
         return this.state.name !== '' ? (
@@ -50,6 +63,8 @@ class App extends Component {
     
     renderLayout() {
       console.log("++++++++++++++++" + JSON.stringify(this.state.users))
+      console.log("----------------" + JSON.stringify(this.state.messages))
+      console.log("wwwwwwwwwwwwww" + this.compareTwoArrays())
        return (
           <div className={styles.App}>
             <div className={styles.AppHeader}>
