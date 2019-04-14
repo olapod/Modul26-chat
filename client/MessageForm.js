@@ -11,7 +11,8 @@ class MessageForm extends Component {
     e.preventDefault();
     const message = {
       from : this.props.name,
-      text : this.state.text
+      text : this.state.text,
+      userColor: this.props.color
     };
     this.props.onMessageSubmit(message);
     this.setState({ text: '' });

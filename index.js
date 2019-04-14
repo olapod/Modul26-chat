@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
     // klient nasłuchuje na wiadomość wejścia do czatu
     socket.on('join', (name) => {
     // użytkownika, który pojawił się w aplikacji, zapisujemy do serwisu trzymającego listę osób w czacie
-        usersService.addUser({
+      usersService.addUser({
       id: socket.id,
       color: generateColor (),
       name
@@ -47,18 +47,23 @@ io.on('connection', (socket) => {
 
 //Aplikacja wysyłająca wiadomości
 io.on('connection', (socket) => {
-    socket.on('message', (message) => {
-      const {name} = usersService.getUserById(socket.id);
-      socket.broadcast.emit('message', {
-        text: message.text,
-        from: name
-      });
+  socket.on('message', (message) => {
+    const {name} = usersService.getUserById(socket.id);
+    
+    socket.broadcast.emit('message', {
+      text: message.text,
+      from: name,
+      
     });
   });
+  
+});
 
   generateColor = () => {
     return '#' +  Math.random().toString(16).substr(-6);
   };
+
+
 
 server.listen(3000, () => {
   console.log('listening on *:3000');

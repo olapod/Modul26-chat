@@ -20,12 +20,14 @@ class App extends Component {
     componentDidMount() {
         socket.on('message', message => this.messageReceive(message));
         socket.on('update', ({users}) => this.chatUpdate(users));
+        this.getUserColor();
         
     }
 
     messageReceive(message) {
         const messages = [message, ...this.state.messages];
         this.setState({messages});
+        
         
     }
     
@@ -40,34 +42,29 @@ class App extends Component {
         this.setState({messages});
         socket.emit('message', message);
         
+                
+        
     }
 
     handleUserSubmit(name) {
         this.setState({name});
         socket.emit('join', name);
       }
-    
-    setColor() {
-      let lastUser = this.state.messages[0].from
-
-      for (var i=0; i < this.state.users.length; i++) {
-        if (this.state.users[i].name === lastUser) {
-          return this.state.users[i].color;
-            }
-        };
+    getUserColor() {
+      if (this.state.messages[0]) {
+        for (var i = 0; i < this.state.users.length; i++) {
+          if (this.state.messages[0].from === this.state.users[i].name) {
+            let color =  this.state.users[i].color
+            return color
+          }
+          // let color = this.state.users.filter(user => user.name === this.state.messages[0].from).map(user => user.color);
+          // return color
+        }
+        
       }
+    }
 
-      // for (var i=0; i<this.state.users.length; i++) {
-      //   if (lastUser === this.state.users[i].name) {
-      //     let color = this.state.users[i].color;
-          
-      //     return this.state.color
-      //   }
-      // }
-    
-     
-      
-
+   
     render() {
         return this.state.name !== '' ? (
           this.renderLayout()
@@ -75,8 +72,8 @@ class App extends Component {
       }
     
     renderLayout() {
-      console.log(this.setColor())
-      // console.log("----------------" + (this.setColor))
+      console.log(this.state.messages)
+      
       
        return (
           <div className={styles.App}>
@@ -95,11 +92,11 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
-                  // color={this.findColor()}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
                   name={this.state.name}
+                  color = {this.getUserColor()}
                 />
               </div>
             </div>

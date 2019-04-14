@@ -1,7 +1,7 @@
 class UsersService {
     constructor() {
       this.users = [];
-      this.colors = [];
+      
     }
   
     getAllUsers() {
@@ -20,8 +20,11 @@ class UsersService {
       this.users = this.users.filter(user => user.id !== userId);
     }
 
+    // findColor(userId) {
+    //   return this.users.filter(user => user.id === userId).map(user => user.color);
+    // }
+    
   }
-
   
   module.exports = UsersService;
   
