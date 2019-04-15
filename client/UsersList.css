@@ -1,6 +1,6 @@
 .Users {
 flex: 1;
-border: 3px solid rgb(255, 0, 191);
+border: 2px solid rgb(68, 58, 155);
 }
 
 .UsersOnline {
@@ -10,22 +10,15 @@ border: 3px solid rgb(255, 0, 191);
 
 .UsersList {
     
-    border: 3px solid rgb(55, 0, 255);
+    border-bottom: 2px solid rgb(68, 58, 155);
+    border-top: 2px solid rgb(68, 58, 155);
     list-style: none;
     margin: 0 auto;
+    padding-left: 0px;
 }
 
 .UserItem {
     list-style-type: none;
-    position: relative;
     font-size: 20px;
 }
 
-.UserItem:before {
-    content: '\2022';      
-    position: absolute;
-    left: -30px;
-    bottom: -28px;       
-    font-size: 60px; 
-    color: green;
-}

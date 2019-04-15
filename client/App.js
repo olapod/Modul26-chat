@@ -14,34 +14,34 @@ const socket = io('/');
 class App extends Component {
     constructor(props) {
       super(props);
-      this.state = {users: [], messages: [], text: '', name: ''};
+      this.state = {users: [], messages: [], text: '', name: '', colors: []}
     };
 
     componentDidMount() {
         socket.on('message', message => this.messageReceive(message));
-        socket.on('update', ({users}) => this.chatUpdate(users));
+        socket.on('update', ({users}) => this.chatUpdate(users));    
     }
 
     messageReceive(message) {
         const messages = [message, ...this.state.messages];
-        this.setState({messages});
+        this.setState({messages});       
     }
     
     chatUpdate(users) {
-        this.setState({users});
+        this.setState({users});   
     }
 
     handleMessageSubmit(message) {
         const messages = [message, ...this.state.messages];
         this.setState({messages});
-        socket.emit('message', message);
+        socket.emit('message', message);        
     }
 
     handleUserSubmit(name) {
         this.setState({name});
         socket.emit('join', name);
       }
-
+ 
     render() {
         return this.state.name !== '' ? (
           this.renderLayout()
@@ -49,9 +49,9 @@ class App extends Component {
       }
     
     renderLayout() {
-      console.log('+++++++++++++++++' + JSON.stringify(this.state.messages))
-      console.log('-------------------' + JSON.stringify(this.state.users))
+
        return (
+
           <div className={styles.App}>
             <div className={styles.AppHeader}>
               <div className={styles.AppTitle}>
@@ -68,6 +68,7 @@ class App extends Component {
               <div className={styles.MessageWrapper}>
                 <MessageList
                   messages={this.state.messages}
+                  users={this.state.users}
                 />
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}

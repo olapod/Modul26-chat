@@ -11,7 +11,8 @@ class MessageForm extends Component {
     e.preventDefault();
     const message = {
       from : this.props.name,
-      text : this.state.text
+      text : this.state.text,
+      
     };
     this.props.onMessageSubmit(message);
     this.setState({ text: '' });
@@ -21,14 +22,21 @@ class MessageForm extends Component {
     this.setState({ text : e.target.value });
   }
 
+  enterDetect(e) {
+    if ('Enter' === event.key) {
+    this.handleSubmit(e)
+  }
+  }
+
   render() {
     return(
       <form className={styles.MessageForm} onSubmit={e => this.handleSubmit(e)}>
-        <input
+        <textarea
           className={styles.MessageInput}
           onChange={e => this.changeHandler(e)}
           value={this.state.text}
           placeholder='Message'
+          onKeyDown={e => this.enterDetect(e)}
         />
       </form>
     );
