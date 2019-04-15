@@ -14,19 +14,20 @@ const socket = io('/');
 class App extends Component {
     constructor(props) {
       super(props);
-      this.state = {users: [], messages: [], text: '', name: '', color: ''};
+      this.state = {users: [], messages: [], text: '', name: '', colors: []}
     };
 
     componentDidMount() {
         socket.on('message', message => this.messageReceive(message));
         socket.on('update', ({users}) => this.chatUpdate(users));
-        this.getUserColor();
+        
         
     }
 
     messageReceive(message) {
         const messages = [message, ...this.state.messages];
         this.setState({messages});
+        
         
         
     }
@@ -41,7 +42,7 @@ class App extends Component {
         const messages = [message, ...this.state.messages];
         this.setState({messages});
         socket.emit('message', message);
-        
+        this.getColors()
                 
         
     }
@@ -50,20 +51,27 @@ class App extends Component {
         this.setState({name});
         socket.emit('join', name);
       }
-    getUserColor() {
-      if (this.state.messages[0]) {
-        for (var i = 0; i < this.state.users.length; i++) {
-          if (this.state.messages[0].from === this.state.users[i].name) {
-            let color =  this.state.users[i].color
-            return color
-          }
+
+    // getUserColor() {
+    //   if (this.state.messages[0]) {
+    //     for (var i = 0; i < this.state.users.length; i++) {
+    //       if (this.state.messages[0].from === this.state.users[i].name) {
+    //         let color =  this.state.users[i].color
+    //         return color
+    //       }
           // let color = this.state.users.filter(user => user.name === this.state.messages[0].from).map(user => user.color);
           // return color
-        }
+        // }
         
-      }
-    }
+    //   }
+    // }
 
+    getColors() {
+      
+      const colors = [...this.state.users];
+      this.setState({colors});
+      
+    }
    
     render() {
         return this.state.name !== '' ? (
@@ -72,7 +80,8 @@ class App extends Component {
       }
     
     renderLayout() {
-      console.log(this.state.messages)
+      
+      console.log(this.state.colors)
       
       
        return (
@@ -96,7 +105,7 @@ class App extends Component {
                 <MessageForm
                   onMessageSubmit={message => this.handleMessageSubmit(message)}
                   name={this.state.name}
-                  color = {this.getUserColor()}
+                  color = {this.state.colors}
                 />
               </div>
             </div>

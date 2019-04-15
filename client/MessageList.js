@@ -19,7 +19,7 @@ const MessageList = props => (
             key={i}
             from={message.from}
             text={message.text}
-            color={message.userColor}
+            color={props.colors[i].color}
           />
         );
       })
