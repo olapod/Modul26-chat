@@ -12,7 +12,7 @@ class MessageForm extends Component {
     const message = {
       from : this.props.name,
       text : this.state.text,
-      userColor: this.props.color
+      
     };
     this.props.onMessageSubmit(message);
     this.setState({ text: '' });
